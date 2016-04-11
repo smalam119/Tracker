@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <TextView
+        android:id="@+id/username_text_view_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/username_text" />
+
+    <EditText
+        android:id="@+id/username_edit_text_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username_text_view_login"
+        android:inputType="text"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/password_text_view_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username_edit_text_login"
+        android:text="@string/password_text" />
+
+    <EditText
+        android:id="@+id/password_edit_text_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_text_view_login"
+        android:inputType="textPassword"
+        android:textColor="@color/colorAccent"/>
+
+    <Button
+        android:id="@+id/login_button_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_edit_text_login"
+        android:text="@string/login_text"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"/>
+
+    <Button
+        android:id="@+id/register_button_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_button_login"
+        android:text="@string/register_text"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

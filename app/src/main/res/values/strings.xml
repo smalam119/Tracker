@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TrackMe</string>
+    <string name="action_settings">Settings</string>
+    <string name="username_text">Username</string>
+    <string name="password_text">Password</string>
+    <string name="login_text">Login</string>
+    <string name="register_text">Register</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="register_with_phone_number">Register with your phone number</string>
+    <string name="okay">Okay</string>
+    <string name="registration_warning">"We are register you with your phone number. You cannot register using this sim card again. Please remember your password</string>
+</resources>
