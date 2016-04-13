@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import apputils.HandyFunctions;
+import databaseHelpers.TalkToDB;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -26,9 +28,19 @@ public class LoginActivity extends AppCompatActivity
         loginButtonLogin.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v) {
-                String username = usernameETLogin.getText().toString();
-                String password = passwordETLogin.getText().toString();
+            public void onClick(View v)
+            {
+                String username = usernameETLogin.getText().toString().trim();
+                String password = passwordETLogin.getText().toString().trim();
+                if(!username.isEmpty() && !password.isEmpty())
+                {
+                    TalkToDB.loginUser(LoginActivity.this, username,password);
+                }
+                else
+                {
+                    HandyFunctions.getLongToast("Enter both username and password",LoginActivity.this);
+                }
+
             }
         });
 
@@ -42,6 +54,5 @@ public class LoginActivity extends AppCompatActivity
             }
         });
     }
-
 
 }

@@ -43,12 +43,29 @@
         android:layout_below="@+id/password_text_view_register"
         />
 
+
+    <TextView
+        android:id="@+id/phone_number_text_view_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/phone_number_text"
+        android:layout_below="@+id/password_edit_text_register"
+        />
+
+    <EditText
+        android:id="@+id/phone_number_edit_text_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:layout_below="@+id/phone_number_text_view_register"
+        />
+
     <Button
         android:id="@+id/register_button_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password_edit_text_register"
-        android:text="@string/register_with_phone_number"
+        android:layout_below="@+id/phone_number_edit_text_register"
+        android:text="@string/register"
         android:background="@color/colorAccent"
         android:textColor="@color/white"
         />
