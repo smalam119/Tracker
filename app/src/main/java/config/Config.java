@@ -30,6 +30,10 @@ public class Config
     public static final String TAG_NO_OF_WATCHERS = "noOfWatchers";
     public static final String TAG_NO_OF_WATCHINGS = "noOfWatchers";
 
+    public static final String SHARED_PREF_NAME = "trackMe";
+    public static final String USER_SHARED_PREF = "email";
+    public static final String LOGGEDIN_SHARED_PREF = "loggedIn";
+
     //id to pass with intent
     public static final String USER_ID = "observerId";
 }

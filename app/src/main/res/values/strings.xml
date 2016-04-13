@@ -12,4 +12,9 @@
     <string name="register">Register</string>
     <string name="okay">Okay</string>
     <string name="registration_warning">"We are register you with your phone number. You cannot register using this sim card again. Please remember your password</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="watch_me_text_activity_main">Watch Me</string>
+    <string name="set_watchers_text_activity_main">Set Watchers</string>
+    <string name="request_text_activity_main">Requests</string>
+    <string name="log_out_text_activity_main">Log Out</string>
 </resources>
