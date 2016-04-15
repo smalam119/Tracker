@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity
     {
         super.onResume();
 
-        loggedIn = HandyFunctions.readFromSharedPreferences(Config.SHARED_PREF_NAME,Config.LOGGEDIN_SHARED_PREF,this);
+        loggedIn = HandyFunctions.readFromSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGEDIN_SHARED_PREF,this);
 
         //If we will get true
         if(loggedIn){

@@ -28,10 +28,26 @@ public class HandyFunctions
         editor.commit();
     }
 
-    public static boolean readFromSharedPreferences(String sharedPreferenceName,String s,Context context)
+    public static boolean readFromSharedPreferencesBoolean(String sharedPreferenceName, String s, Context context)
     {
         SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(s, false);
 
     }
+
+    public static void writeToSharedPreferencesString(String sharedPreferenceName,String key, String value,Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public static String readFromSharedPreferencesString(String sharedPreferenceName, String s, Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(s, "cool");
+
+    }
+
 }

@@ -8,6 +8,7 @@
     <string name="register_text">Register</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="register_with_phone_number">Register with your phone number</string>
+    <string name="please_save_these_credentials">Please Save These Credentials</string>
     <string name="register_completer">Registration Complete</string>
     <string name="register">Register</string>
     <string name="okay">Okay</string>
@@ -16,5 +17,6 @@
     <string name="watch_me_text_activity_main">Watch Me</string>
     <string name="set_watchers_text_activity_main">Set Watchers</string>
     <string name="request_text_activity_main">Requests</string>
+    <string name="profile_text_activity_main">Profile</string>
     <string name="log_out_text_activity_main">Log Out</string>
 </resources>

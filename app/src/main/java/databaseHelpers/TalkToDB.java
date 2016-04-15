@@ -12,6 +12,8 @@ import config.Config;
  */
 public class TalkToDB
 {
+
+
     public static void addUser(final String userName, final String password, final String phoneNumber, final Activity activity)
     {
 
@@ -49,5 +51,44 @@ public class TalkToDB
         AddUser ae = new AddUser();
         ae.execute();
     }
+
+
+    public static void editUserName(final String rawUserName, final String userName, final Activity activity)
+    {
+
+
+        class EditUserName extends AsyncTask<Void,Void,String> {
+
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(activity,"Registering...","Wait...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(activity, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... v) {
+                HashMap<String,String> params = new HashMap<>();
+                params.put(Config.KEY_RAW_USER_NAME,rawUserName);
+                params.put(Config.KEY_USER_NAME,userName);
+
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(Config.URL_UPDATE_USER_NAME, params);
+                return res;
+            }
+        }
+
+        EditUserName ae = new EditUserName();
+        ae.execute();
+    }
+
 
 }
