@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.watch_me_button_main_activity :
+
+                goToMap();
+
                 break;
 
             case R.id.set_watchers_button_main_activity :
@@ -134,6 +137,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME, Config.LOGGEDIN_SHARED_PREF, false, this);
         Intent i = new Intent(this,LoginActivity.class);
+        startActivity(i);
+    }
+
+    public void goToMap()
+    {
+        Intent i = new Intent(this,WatchersMapsActivity.class);
         startActivity(i);
     }
 }
