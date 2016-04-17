@@ -52,7 +52,10 @@
 
         <activity
             android:name=".WatchersMapsActivity"
-            android:label="@string/title_activity_watchers_maps"></activity>
+            android:label="@string/title_activity_watchers_maps" />
+        <activity
+            android:name=".WatchMeActivity"
+            android:label="@string/title_activity_watch_me" />
     </application>
 
 </manifest>

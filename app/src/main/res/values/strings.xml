@@ -21,4 +21,5 @@
     <string name="log_out_text_activity_main">Log Out</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_watchers_maps">Map</string>
+    <string name="title_activity_watch_me">Map</string>
 </resources>

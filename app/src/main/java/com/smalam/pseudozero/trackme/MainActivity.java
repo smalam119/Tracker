@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void goToMap()
     {
-        Intent i = new Intent(this,WatchersMapsActivity.class);
+        Intent i = new Intent(this,WatchMeActivity.class);
         startActivity(i);
     }
 }
