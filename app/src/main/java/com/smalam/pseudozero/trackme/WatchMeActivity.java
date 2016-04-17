@@ -8,12 +8,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+
+import apputils.HandyFunctions;
+import config.Config;
+import databaseHelpers.TalkToDB;
 
 public class WatchMeActivity extends FragmentActivity implements LocationSource {
 
@@ -21,11 +24,16 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
     private OnLocationChangedListener onLocationChangedListener;
     private android.location.LocationListener locationListener;
     private LocationManager locationManager;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        userName = HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,getApplicationContext());
+
+        Toast.makeText(getApplicationContext(),userName,Toast.LENGTH_LONG).show();
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new MyLocationListener();
@@ -48,7 +56,6 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
         }
 
         setUpMapIfNeeded();
-
 
     }
 
@@ -126,7 +133,11 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
 
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()),18f));
 
+                //TalkToDB.updateLocation(userName,"123456789","987654321",WatchMeActivity.this);
+
                 Toast.makeText(getApplicationContext(),"Location Changed",Toast.LENGTH_LONG).show();
+
+                TalkToDB.updateLocation(userName,location.getLatitude()+"",location.getLongitude()+"",WatchMeActivity.this);
             }
         }
 

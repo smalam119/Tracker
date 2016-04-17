@@ -11,6 +11,7 @@ public class Config
     public static final String URL_UPDATE_USER = "http://jenkisoutside-001-site1.1tempurl.com/test/updateUser.php";
     public static final String GET_ALL_USER = "http://jenkisoutside-001-site1.1tempurl.com/test/getAll.php";
     public static final String URL_UPDATE_USER_NAME= "http://jenkisoutside-001-site1.1tempurl.com/test/updateUserName.php";
+    public static final String URL_UPDATE_LOCATION= "http://jenkisoutside-001-site1.1tempurl.com/test/updateLocation.php";
 
 
     //Keys that will be used to send the request to php scripts
@@ -22,6 +23,8 @@ public class Config
     public static final String KEY_PHONE_NUMBER = "phoneNumber";
     public static final String KEY_NO_OF_WATCHERS = "noOfWatchers";
     public static final String KEY_NO_OF_WATCHINGS = "noOfWatching";
+    public static final String KEY_CURRENT_LAT_ = "currentLat";
+    public static final String KEY_CURRENT_LNG_ = "currentLng";
 
     //JSON Tags
     public static final String TAG_JSON_ARRAY="result";

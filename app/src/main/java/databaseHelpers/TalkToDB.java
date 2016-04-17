@@ -90,5 +90,47 @@ public class TalkToDB
         ae.execute();
     }
 
+    public static void updateLocation(final String userName,final String currentLat, final String currentLng,final Activity activity)
+    {
+
+
+        class UpdateUserLocation extends AsyncTask<Void,Void,String>
+        {
+
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute()
+            {
+                super.onPreExecute();
+                loading = ProgressDialog.show(activity,"Registering...","Wait...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s)
+            {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(activity, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... v)
+            {
+                HashMap<String,String> params = new HashMap<>();
+                params.put(Config.KEY_USER_NAME,userName);
+                params.put(Config.KEY_CURRENT_LAT_,currentLat);
+                params.put(Config.KEY_CURRENT_LNG_,currentLng);
+
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(Config.URL_UPDATE_LOCATION, params);
+                return res;
+            }
+        }
+
+        UpdateUserLocation ae = new UpdateUserLocation();
+        ae.execute();
+    }
+
 
 }
