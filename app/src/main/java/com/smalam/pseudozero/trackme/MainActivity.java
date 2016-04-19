@@ -77,11 +77,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             case R.id.watch_me_button_main_activity :
 
-                goToMap();
+                goToWatchMe();
 
                 break;
 
             case R.id.set_watchers_button_main_activity :
+
+                goToWatchers();
+
                 break;
 
             case R.id.requests_button_main_activity :
@@ -140,9 +143,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-    public void goToMap()
+    public void goToWatchMe()
     {
         Intent i = new Intent(this,WatchMeActivity.class);
+        startActivity(i);
+    }
+
+    public void goToWatchers()
+    {
+        Intent i = new Intent(this,WatchersMapsActivity.class);
         startActivity(i);
     }
 }

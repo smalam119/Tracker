@@ -13,7 +13,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-
 import apputils.HandyFunctions;
 import config.Config;
 import databaseHelpers.TalkToDB;
@@ -29,7 +28,7 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_watch_me);
 
         userName = HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,getApplicationContext());
 
@@ -41,17 +40,24 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
             boolean gpsIsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             boolean networkIsEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (gpsIsEnabled) {
+            if (gpsIsEnabled)
+            {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 2000L, 5F, locationListener);
-            } else if (networkIsEnabled) {
+            }
+            else if (networkIsEnabled)
+            {
                 locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER, 2000L, 5F, locationListener);
-            } else {
+            }
+            else
+            {
                 //Show an error dialog that GPS is disabled...
             }
-        } else {
+        }
+        else
+        {
             //Show some generic error dialog because something must have gone wrong with location manager.
         }
 
@@ -129,7 +135,7 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
         {
             if( onLocationChangedListener != null )
             {
-                onLocationChangedListener.onLocationChanged( location );
+                onLocationChangedListener.onLocationChanged(location);
 
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()),18f));
 

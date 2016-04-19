@@ -1,11 +1,14 @@
 package com.smalam.pseudozero.trackme;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,15 +17,22 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import config.Config;
+import databaseHelpers.RequestHandler;
 
-public class WatchersMapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class WatchersMapsActivity extends FragmentActivity implements OnMapReadyCallback
+{
 
     private GoogleMap mMap;
     Marker marker;
+    public Handler handler;
+    public Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +42,23 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        handler = new Handler();
+        runnable = new MyRunnable();
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap)
+    {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-36.867420, 174.765534);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-        goToLocation(-36.867420, 174.765534,15.0f);
+        //getWatchedsLocation(WatchersMapsActivity.this);
+        watchedsLocationUpdate();
     }
 
     private void goToLocation(double lat, double lng, float zoom)
@@ -54,7 +69,8 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
         setMarker(getLocation(latLng),lat,lng);
     }
 
-    private void setMarker(String locality, double lat, double lng) {
+    private void setMarker(String locality, double lat, double lng)
+    {
 
         if (marker != null) {
             marker.remove();
@@ -83,5 +99,71 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void getWatchedsLocation(final Activity activity)
+    {
+        class GetUser extends AsyncTask<Void,Void,String> {
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(activity,"Fetching...","Wait...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                readLatLng(s);
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequest(Config.URL_WATCHED_LOCATION, "sydCool0f108");
+                return s;
+            }
+        }
+        GetUser ge = new GetUser();
+        ge.execute();
+    }
+
+    private void readLatLng(String json)
+    {
+        try
+        {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
+            JSONObject c = result.getJSONObject(0);
+            String lat = c.getString(Config.TAG_CURRENT_LAT_);
+            String lng = c.getString(Config.TAG_CURRENT_LNG_);
+
+            Toast.makeText(getApplicationContext(),lat+" "+lng,Toast.LENGTH_LONG).show();
+
+            goToLocation( Double.parseDouble(lat),  Double.parseDouble(lng),15.0f);
+        }
+
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public class MyRunnable implements Runnable
+    {
+
+        @Override
+        public void run()
+        {
+            //HandyFunctions.getShortToast("its working",getApplicationContext());
+            getWatchedsLocation(WatchersMapsActivity.this);
+            handler.postDelayed(runnable,5000);
+        }
+    }
+
+    public void watchedsLocationUpdate()
+    {
+        runnable.run();
     }
 }

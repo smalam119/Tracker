@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity
     EditText usernameETLogin, passwordETLogin;
     Button loginButtonLogin, registerButtonLogin;
     private boolean loggedIn;
+    String username,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,8 +41,8 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                String username = usernameETLogin.getText().toString().trim();
-                String password = passwordETLogin.getText().toString().trim();
+                username = usernameETLogin.getText().toString().trim();
+                password = passwordETLogin.getText().toString().trim();
                 if(!username.isEmpty() && !password.isEmpty())
                 {
                     loginUser(LoginActivity.this, username,password);
@@ -72,6 +73,8 @@ public class LoginActivity extends AppCompatActivity
 
         loggedIn = HandyFunctions.readFromSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGEDIN_SHARED_PREF,this);
 
+        HandyFunctions.getLongToast(loggedIn+"",getApplicationContext());
+
         //If we will get true
         if(loggedIn){
             //We will start the Profile Activity
@@ -84,6 +87,12 @@ public class LoginActivity extends AppCompatActivity
     protected void onPause()
     {
         super.onPause();
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 
@@ -131,6 +140,7 @@ public class LoginActivity extends AppCompatActivity
             else if(givenPassword.equals(password))
             {
                 HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGEDIN_SHARED_PREF,true,this);
+                HandyFunctions.writeToSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,username,this);
 
                 Intent i = new Intent(this,MainActivity.class);
                 startActivity(i);
