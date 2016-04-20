@@ -7,6 +7,8 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,11 +26,33 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
     private android.location.LocationListener locationListener;
     private LocationManager locationManager;
     String userName;
+    Button inDangerButton,outOfDangerButton;
+    public boolean isInDanger = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_me);
+
+        inDangerButton = (Button) findViewById(R.id.in_danger);
+        inDangerButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                isInDanger = true;
+            }
+        });
+
+        outOfDangerButton = (Button) findViewById(R.id.out_of_danger);
+        outOfDangerButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                isInDanger = false;
+            }
+        });
 
         userName = HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,getApplicationContext());
 
@@ -143,7 +167,15 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
 
                 Toast.makeText(getApplicationContext(),"Location Changed",Toast.LENGTH_LONG).show();
 
-                TalkToDB.updateLocation(userName,location.getLatitude()+"",location.getLongitude()+"",WatchMeActivity.this);
+                if(isInDanger)
+                {
+                    TalkToDB.updateLocation(userName, location.getLatitude() + "", location.getLongitude() + "","true", WatchMeActivity.this);
+                }
+
+                if(!isInDanger)
+                {
+                    TalkToDB.updateLocation(userName, location.getLatitude() + "", location.getLongitude() + "","false", WatchMeActivity.this);
+                }
             }
         }
 

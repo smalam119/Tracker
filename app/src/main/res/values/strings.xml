@@ -15,6 +15,7 @@
     <string name="registration_warning">"We are register you with your phone number. You cannot register using this sim card again. Please remember your password</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="watch_me_text_activity_main">Watch Me</string>
+    <string name="watch_text_activity_main">Watch</string>
     <string name="set_watchers_text_activity_main">Set Watchers</string>
     <string name="request_text_activity_main">Requests</string>
     <string name="profile_text_activity_main">Profile</string>

@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 {
 
     TextView loggedInMessage;
-    Button watchMeButton,setWatchersButton,requestButton,profileButton,logOutButton;
+    Button watchMeButton,watchButton,requestButton,profileButton,logOutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         watchMeButton = (Button) findViewById(R.id.watch_me_button_main_activity);
         watchMeButton.setOnClickListener(this);
-        setWatchersButton = (Button) findViewById(R.id.set_watchers_button_main_activity);
-        setWatchersButton.setOnClickListener(this);
+        watchButton = (Button) findViewById(R.id.watch_button_main_activity);
+        watchButton.setOnClickListener(this);
         requestButton = (Button) findViewById(R.id.requests_button_main_activity);
         requestButton.setOnClickListener(this);
         profileButton = (Button) findViewById(R.id.profile_button_main_activity);
@@ -81,9 +81,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
 
-            case R.id.set_watchers_button_main_activity :
+            case R.id.watch_button_main_activity :
 
-                goToWatchers();
+                goToWatch();
 
                 break;
 
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-    public void goToWatchers()
+    public void goToWatch()
     {
         Intent i = new Intent(this,WatchersMapsActivity.class);
         startActivity(i);

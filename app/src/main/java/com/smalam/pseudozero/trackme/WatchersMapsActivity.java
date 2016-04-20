@@ -14,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -33,6 +34,7 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
     Marker marker;
     public Handler handler;
     public Runnable runnable;
+    public boolean isInDanger = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +78,28 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
             marker.remove();
         }
 
-        MarkerOptions options = new MarkerOptions()
-                .title(locality)
-                .position(new LatLng(lat, lng));
+        if(isInDanger == false)
+        {
+
+            MarkerOptions options = new MarkerOptions()
+                    .title(locality)
+                    .position(new LatLng(lat, lng))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            marker = mMap.addMarker(options);
+        }
+
+        if(isInDanger == true)
+        {
+
+            MarkerOptions options = new MarkerOptions()
+                    .title(locality)
+                    .position(new LatLng(lat, lng))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            marker = mMap.addMarker(options);
+        }
 
 
-        marker = mMap.addMarker(options);
+
 
     }
 
@@ -138,8 +156,14 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
             JSONObject c = result.getJSONObject(0);
             String lat = c.getString(Config.TAG_CURRENT_LAT_);
             String lng = c.getString(Config.TAG_CURRENT_LNG_);
+            String isInDangerFromDb = c.getString(Config.TAG_IS_IN_DANGER);
 
-            Toast.makeText(getApplicationContext(),lat+" "+lng,Toast.LENGTH_LONG).show();
+            if(isInDangerFromDb.equalsIgnoreCase("true"))
+            {
+                isInDanger = true;
+            }
+
+            Toast.makeText(getApplicationContext(),lat+" "+lng+" "+isInDanger+"",Toast.LENGTH_LONG).show();
 
             goToLocation( Double.parseDouble(lat),  Double.parseDouble(lng),15.0f);
         }

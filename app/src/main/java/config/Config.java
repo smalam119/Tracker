@@ -26,6 +26,8 @@ public class Config
     public static final String KEY_NO_OF_WATCHINGS = "noOfWatching";
     public static final String KEY_CURRENT_LAT_ = "currentLat";
     public static final String KEY_CURRENT_LNG_ = "currentLng";
+    public static final String KEY_IS_IN_DANGER = "isInDanger";
+
 
     //JSON Tags
     public static final String TAG_JSON_ARRAY="result";
@@ -38,6 +40,7 @@ public class Config
     public static final String TAG_RAW_USER_NAME = "rawUserName";
     public static final String TAG_CURRENT_LAT_ = "currentLat";
     public static final String TAG_CURRENT_LNG_ = "currentLng";
+    public static final String TAG_IS_IN_DANGER = "isInDanger";
 
     public static final String SHARED_PREF_NAME = "trackMe";
     public static final String USER_SHARED_PREF = "userName";

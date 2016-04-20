@@ -27,6 +27,13 @@
         />
 
     <Button
+        android:id="@+id/watch_button_main_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/watch_text_activity_main"
+        />
+
+    <Button
         android:id="@+id/set_watchers_button_main_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -90,7 +90,7 @@ public class TalkToDB
         ae.execute();
     }
 
-    public static void updateLocation(final String userName,final String currentLat, final String currentLng,final Activity activity)
+    public static void updateLocation(final String userName,final String currentLat, final String currentLng,final String isInDanger,final Activity activity)
     {
 
 
@@ -121,6 +121,7 @@ public class TalkToDB
                 params.put(Config.KEY_USER_NAME,userName);
                 params.put(Config.KEY_CURRENT_LAT_,currentLat);
                 params.put(Config.KEY_CURRENT_LNG_,currentLng);
+                params.put(Config.KEY_IS_IN_DANGER,isInDanger);
 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(Config.URL_UPDATE_LOCATION, params);
