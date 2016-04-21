@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 {
 
     TextView loggedInMessage;
-    Button watchMeButton,watchButton,requestButton,profileButton,logOutButton;
+    Button watchMeButton,watchButton,requestButton,profileButton,logOutButton,setWatchers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,16 +31,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         watchMeButton = (Button) findViewById(R.id.watch_me_button_main_activity);
         watchMeButton.setOnClickListener(this);
+
         watchButton = (Button) findViewById(R.id.watch_button_main_activity);
         watchButton.setOnClickListener(this);
+
         requestButton = (Button) findViewById(R.id.requests_button_main_activity);
-        requestButton.setOnClickListener(this);
+        watchButton.setOnClickListener(this);
+
+        setWatchers = (Button) findViewById(R.id.set_watchers_button_main_activity);
+        setWatchers.setOnClickListener(this);
+
         profileButton = (Button) findViewById(R.id.profile_button_main_activity);
         profileButton.setOnClickListener(this);
+
         logOutButton = (Button) findViewById(R.id.log_out_button_main_activity);
         logOutButton.setOnClickListener(this);
 
-        String s = HandyFunctions.readFromSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGEDIN_SHARED_PREF,this)+"";
+        String s = HandyFunctions.readFromSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGED_IN_SHARED_PREF,this)+"";
 
         HandyFunctions.getLongToast(s,this);
     }
@@ -84,6 +91,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.watch_button_main_activity :
 
                 goToWatch();
+
+                break;
+
+            case R.id.set_watchers_button_main_activity:
+
+                goToSetWatcher();
 
                 break;
 
@@ -138,9 +151,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void returnToLogin()
     {
-        HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME, Config.LOGGEDIN_SHARED_PREF, false, this);
+        HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME, Config.LOGGED_IN_SHARED_PREF, false, this);
         Intent i = new Intent(this,LoginActivity.class);
         startActivity(i);
+        finish();
     }
 
     public void goToWatchMe()
@@ -152,6 +166,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void goToWatch()
     {
         Intent i = new Intent(this,WatchersMapsActivity.class);
+        startActivity(i);
+    }
+
+    public void goToSetWatcher()
+    {
+        Intent i = new Intent(this,SetWatchersActivity.class);
         startActivity(i);
     }
 }

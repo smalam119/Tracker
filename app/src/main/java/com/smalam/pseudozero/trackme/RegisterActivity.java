@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity
 
             public void onClick(DialogInterface dialog, int id)
             {
-                HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGEDIN_SHARED_PREF,true,getApplicationContext());
+                HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGED_IN_SHARED_PREF,true,getApplicationContext());
                 //TalkToDB.addUser(HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,getApplicationContext()),password,phoneNumber,RegisterActivity.this);
 
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -130,6 +130,7 @@ public class RegisterActivity extends AppCompatActivity
             userName = rawUsername+ UserNameGenarators.oddOrEven(userID)+UserNameGenarators.randomCharactor()+userID;
 
             HandyFunctions.writeToSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,userName,this);
+            HandyFunctions.writeToSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_PASSWORD_PREF,password,this);
 
             SharedPreferences sharedPreferences = this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();

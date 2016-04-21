@@ -1,6 +1,7 @@
 package com.smalam.pseudozero.trackme;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -51,6 +52,9 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
             public void onClick(View v)
             {
                 isInDanger = false;
+
+                CustomDialogBox customDialogBox = new CustomDialogBox(WatchMeActivity.this);
+                customDialogBox.show();
             }
         });
 

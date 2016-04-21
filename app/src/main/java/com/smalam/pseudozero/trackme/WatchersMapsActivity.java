@@ -24,6 +24,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import apputils.HandyFunctions;
 import config.Config;
 import databaseHelpers.RequestHandler;
 
@@ -35,6 +37,7 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
     public Handler handler;
     public Runnable runnable;
     public boolean isInDanger = false;
+    String watchedName; //= "sydCool0f108";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,10 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        watchedName = HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME,Config.WATCHER_SHARED_PREF,WatchersMapsActivity.this);
+
+        HandyFunctions.getLongToast(watchedName,getApplicationContext());
 
         handler = new Handler();
         runnable = new MyRunnable();
@@ -139,7 +146,7 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequest(Config.URL_WATCHED_LOCATION, "sydCool0f108");
+                String s = rh.sendGetRequest(Config.URL_WATCHED_LOCATION, watchedName);
                 return s;
             }
         }

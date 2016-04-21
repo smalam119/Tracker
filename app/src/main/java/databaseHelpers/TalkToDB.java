@@ -52,6 +52,43 @@ public class TalkToDB
         ae.execute();
     }
 
+    public static void addWatchers(final String user, final String watcher, final Activity activity)
+    {
+
+
+        class AddUser extends AsyncTask<Void,Void,String> {
+
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(activity,"Registering...","Wait...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(activity, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... v) {
+                HashMap<String,String> params = new HashMap<>();
+                params.put(Config.KEY_USER_NAME,user);
+                params.put(Config.KEY_WATCHER,watcher);
+
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(Config.URL_ADD_WATCHERS, params);
+                return res;
+            }
+        }
+
+        AddUser ae = new AddUser();
+        ae.execute();
+    }
+
 
     public static void editUserName(final String rawUserName, final String userName, final Activity activity)
     {
@@ -103,7 +140,7 @@ public class TalkToDB
             protected void onPreExecute()
             {
                 super.onPreExecute();
-                loading = ProgressDialog.show(activity,"Registering...","Wait...",false,false);
+                loading = ProgressDialog.show(activity,"Updating...","Wait...",false,false);
             }
 
             @Override

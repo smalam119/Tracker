@@ -3,25 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="10dip">
 
-    <TextView
-        android:id="@+id/registration_warning_text_view_register"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/password_dialog"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/registration_warning"
-        />
+        android:ems="13"/>
 
     <Button
-        android:id="@+id/okay_button_warning_dialog_register"
+        android:id="@+id/okay_button_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/okay"
         android:textColor="@color/white"
         android:background="@color/colorAccent"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/registration_warning_text_view_register"
-        android:layout_centerInParent="true"/>
+        android:layout_below="@+id/password_dialog"/>
 
 </RelativeLayout>

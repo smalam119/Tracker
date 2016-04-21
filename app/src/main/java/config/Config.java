@@ -13,6 +13,7 @@ public class Config
     public static final String URL_UPDATE_USER_NAME= "http://jenkisoutside-001-site1.1tempurl.com/test/updateUserName.php";
     public static final String URL_UPDATE_LOCATION= "http://jenkisoutside-001-site1.1tempurl.com/test/updateLocation.php";
     public static final String URL_WATCHED_LOCATION= "http://jenkisoutside-001-site1.1tempurl.com/test/getWatchedsLocation.php?watcherName=";
+    public static final String URL_ADD_WATCHERS= "http://jenkisoutside-001-site1.1tempurl.com/test/addWatchers.php";
 
 
     //Keys that will be used to send the request to php scripts
@@ -27,6 +28,7 @@ public class Config
     public static final String KEY_CURRENT_LAT_ = "currentLat";
     public static final String KEY_CURRENT_LNG_ = "currentLng";
     public static final String KEY_IS_IN_DANGER = "isInDanger";
+    public static final String KEY_WATCHER = "watcherName";
 
 
     //JSON Tags
@@ -44,8 +46,9 @@ public class Config
 
     public static final String SHARED_PREF_NAME = "trackMe";
     public static final String USER_SHARED_PREF = "userName";
-    public static final String WATCHER_SHARED_PREF = "sydCool0f108";
-    public static final String LOGGEDIN_SHARED_PREF = "loggedIn";
+    public static final String USER_PASSWORD_PREF = "password";
+    public static final String WATCHER_SHARED_PREF = "watcherName";
+    public static final String LOGGED_IN_SHARED_PREF = "loggedIn";
 
     //id to pass with intent
     public static final String USER_ID = "observerId";

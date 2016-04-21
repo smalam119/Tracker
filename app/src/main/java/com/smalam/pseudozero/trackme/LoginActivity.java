@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity
     {
         super.onResume();
 
-        loggedIn = HandyFunctions.readFromSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGEDIN_SHARED_PREF,this);
+        loggedIn = HandyFunctions.readFromSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGED_IN_SHARED_PREF,this);
 
         HandyFunctions.getLongToast(loggedIn+"",getApplicationContext());
 
@@ -87,12 +87,6 @@ public class LoginActivity extends AppCompatActivity
     protected void onPause()
     {
         super.onPause();
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
         finish();
     }
 
@@ -139,8 +133,9 @@ public class LoginActivity extends AppCompatActivity
             }
             else if(givenPassword.equals(password))
             {
-                HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGEDIN_SHARED_PREF,true,this);
+                HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGED_IN_SHARED_PREF,true,this);
                 HandyFunctions.writeToSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,username,this);
+                HandyFunctions.writeToSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_PASSWORD_PREF,password,this);
 
                 Intent i = new Intent(this,MainActivity.class);
                 startActivity(i);
