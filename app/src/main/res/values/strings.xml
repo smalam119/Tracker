@@ -24,4 +24,16 @@
     <string name="title_activity_watchers_maps">Map</string>
     <string name="title_activity_watch_me">Map</string>
     <string name="title_activity_dialog_box">DialogBox</string>
+    <string name="app_short_name">PNGCM Demo</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="server_registered">Successfully registered on server</string>
+    <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
+        send downstream messages to this app.</string>
+    <string name="gcm_unregister_message">Token unsubscribed from GCM and notification server. You will no longer
+    get any notification.</string>
+    <string name="registering_message">Generating InstanceID token...</string>
+    <string name="unregistering_message">Un-registering Notification Service...</string>
+    <string name="token_error_message">An error occurred while either fetching the InstanceID token,
+        sending the fetched token to the server. Please refresh.</string>
 </resources>

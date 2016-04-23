@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import apputils.HandyFunctions;
 import config.Config;
+import gcmFiles.MainActivityTest;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void goToSetWatcher()
     {
-        Intent i = new Intent(this,SetWatchersActivity.class);
+        Intent i = new Intent(this, MainActivityTest.class);
         startActivity(i);
     }
 }
