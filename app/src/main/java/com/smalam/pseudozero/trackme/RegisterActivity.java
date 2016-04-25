@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +23,7 @@ import config.Config;
 import databaseHelpers.RequestHandler;
 import databaseHelpers.TalkToDB;
 import databaseHelpers.UserNameGenarators;
+import gcmFiles.MyGCMRegistrationIntentService;
 
 
 public class RegisterActivity extends AppCompatActivity
@@ -52,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity
 
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
                 String s= sharedPreferences.getString(Config.USER_SHARED_PREF, "cool");
+                startRegistrationService(true,true,s);
 
                 Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
 
@@ -74,8 +78,6 @@ public class RegisterActivity extends AppCompatActivity
 
                 TalkToDB.addUser(rawUsername, password, phoneNumber, RegisterActivity.this);
                 getRawUsername(rawUsername);
-
-
             }
         });
     }
@@ -150,6 +152,26 @@ public class RegisterActivity extends AppCompatActivity
             e.printStackTrace();
             HandyFunctions.getLongToast("mr.anderson surprise to see me",getApplicationContext());
         }
+    }
+
+    public void startRegistrationService(boolean reg, boolean tkr,String userName)
+    {
+
+        if (Config.checkPlayServices(this)) {
+            //mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
+            //mRegistrationProgressBar.setVisibility(View.VISIBLE);
+            //TextView tv = (TextView) findViewById(R.id.informationTextView);
+            //if (reg) tv.setText(R.string.registering_message);
+            //else tv.setText(R.string.unregistering_message);
+            Toast.makeText(this, "Background service started...", Toast.LENGTH_LONG).show();
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, MyGCMRegistrationIntentService.class);
+            intent.putExtra("register", reg);
+            intent.putExtra("tokenRefreshed", tkr);
+            intent.putExtra("userName",userName);
+            startService(intent);
+        }
+
     }
 
 }

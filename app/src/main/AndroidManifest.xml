@@ -105,7 +105,7 @@
             android:label="@string/title_activity_watch_me" />
 
         <activity
-            android:name="gcmFiles.ScrollingActivity"
+            android:name=".NotificationActivity"
             android:label="@string/title_activity_watch_me" />
 
     </application>
