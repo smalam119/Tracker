@@ -34,7 +34,7 @@
             />
 
         <Button
-            android:id="@+id/Leave_it_pending_button_notification"
+            android:id="@+id/leave_it_pending_button_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Leave it pending"

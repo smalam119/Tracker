@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import apputils.HandyFunctions;
 import config.Config;
 import databaseHelpers.TalkToDB;
@@ -44,7 +44,17 @@ public class NotificationActivity extends Activity implements View.OnClickListen
         switch(v.getId())
         {
             case R.id.accept_button_notification :
-                TalkToDB.addWatchers(requester,userName,NotificationActivity.this);
+                TalkToDB.acceptWatchers(requester,userName,NotificationActivity.this,"1");
+                Toast.makeText(this,requester + userName,Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.cancel_button_notification :
+                //
+                break;
+
+            case R.id.leave_it_pending_button_notification:
+                //
+                break;
         }
     }
 }

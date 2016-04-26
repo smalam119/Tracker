@@ -20,6 +20,9 @@ public class Config
     public static final String URL_UPDATE_LOCATION= "http://jenkisoutside-001-site1.1tempurl.com/test/updateLocation.php";
     public static final String URL_WATCHED_LOCATION= "http://jenkisoutside-001-site1.1tempurl.com/test/getWatchedsLocation.php?watcherName=";
     public static final String URL_ADD_WATCHERS= "http://jenkisoutside-001-site1.1tempurl.com/test/addWatchers.php";
+    public static final String URL_ACCEPT_WATCHERS= "http://jenkisoutside-001-site1.1tempurl.com/test/acceptWatchers.php";
+    public static final String URL_ALL_WATCHERS= "http://jenkisoutside-001-site1.1tempurl.com/test/getAllWatchers.php?userName=";
+    public static final String URL_DELETE_USER= "http://jenkisoutside-001-site1.1tempurl.com/test/deleteUser.php?userName=";
 
 
     //Keys that will be used to send the request to php scripts
@@ -35,6 +38,8 @@ public class Config
     public static final String KEY_CURRENT_LNG_ = "currentLng";
     public static final String KEY_IS_IN_DANGER = "isInDanger";
     public static final String KEY_WATCHER = "watcherName";
+    public static final String KEY_IS_ACCEPT = "isAccept";
+
 
 
     //JSON Tags
@@ -49,6 +54,8 @@ public class Config
     public static final String TAG_CURRENT_LAT_ = "currentLat";
     public static final String TAG_CURRENT_LNG_ = "currentLng";
     public static final String TAG_IS_IN_DANGER = "isInDanger";
+    public static final String TAG_IS_ACCEPTED = "isAccepted";
+    public static final String TAG_WATCHER_NAME = "watcherName";
 
     public static final String SHARED_PREF_NAME = "trackMe";
     public static final String USER_SHARED_PREF = "userName";

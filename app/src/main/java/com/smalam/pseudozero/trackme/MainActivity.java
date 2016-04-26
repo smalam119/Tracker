@@ -105,6 +105,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.profile_button_main_activity:
+
+                goToProfile();
+
                 break;
 
             case R.id.log_out_button_main_activity :
@@ -172,7 +175,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void goToSetWatcher()
     {
-        Intent i = new Intent(this, MainActivityTest.class);
+        Intent i = new Intent(this, SetWatchersActivity.class);
+        startActivity(i);
+    }
+
+    public void goToProfile()
+    {
+        Intent i = new Intent(this,ProfileActivity.class);
         startActivity(i);
     }
 }

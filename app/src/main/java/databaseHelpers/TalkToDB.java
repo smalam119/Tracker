@@ -52,6 +52,35 @@ public class TalkToDB
         ae.execute();
     }
 
+    public static void deleteUser(final String userName, final Activity activity){
+        class DeleteUSer extends AsyncTask<Void,Void,String> {
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(activity, "Updating...", "Wait...", false, false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(activity, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequest(Config.URL_DELETE_USER,userName);
+                return s;
+            }
+        }
+
+        DeleteUSer de = new DeleteUSer();
+        de.execute();
+    }
+
     public static void addWatchers(final String user, final String watcher, final Activity activity)
     {
 
@@ -81,6 +110,44 @@ public class TalkToDB
 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(Config.URL_ADD_WATCHERS, params);
+                return res;
+            }
+        }
+
+        AddUser ae = new AddUser();
+        ae.execute();
+    }
+
+    public static void acceptWatchers(final String user, final String watcher, final Activity activity, final String isAccepted)
+    {
+
+
+        class AddUser extends AsyncTask<Void,Void,String> {
+
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(activity,"Registering...","Wait...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(activity, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... v) {
+                HashMap<String,String> params = new HashMap<>();
+                params.put(Config.KEY_USER_NAME,user);
+                params.put(Config.KEY_WATCHER,watcher);
+                params.put(Config.KEY_IS_ACCEPT,isAccepted);
+
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(Config.URL_ACCEPT_WATCHERS, params);
                 return res;
             }
         }

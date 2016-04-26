@@ -27,6 +27,7 @@ import java.util.HashMap;
 import apputils.HandyFunctions;
 import config.Config;
 import databaseHelpers.RequestHandler;
+import databaseHelpers.TalkToDB;
 
 public class MainActivityTest extends AppCompatActivity implements View.OnClickListener {
 
@@ -134,7 +135,8 @@ public class MainActivityTest extends AppCompatActivity implements View.OnClickL
         }
         if (view.getId() == R.id.add)
         {
-            sendRequest(userName,userName, MainActivityTest.this);
+            sendRequest(userName,"moto0g118", MainActivityTest.this);
+            TalkToDB.addWatchers(userName,"moto0g118",MainActivityTest.this);
         }
 
     }

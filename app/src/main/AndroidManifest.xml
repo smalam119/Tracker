@@ -70,7 +70,7 @@
         <!-- [END instanceId_listener] -->
         <service
             android:name="gcmFiles.MyGCMRegistrationIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity
             android:name=".RegisterActivity"
@@ -98,16 +98,14 @@
         <activity
             android:name=".WatchMeActivity"
             android:label="@string/title_activity_watch_me" />
-        <activity android:name=".SetWatchersActivity"></activity>
-
+        <activity android:name=".SetWatchersActivity" />
         <activity
             android:name="gcmFiles.MainActivityTest"
             android:label="@string/title_activity_watch_me" />
-
         <activity
             android:name=".NotificationActivity"
             android:label="@string/title_activity_watch_me" />
-
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>
