@@ -81,6 +81,39 @@ public class TalkToDB
         de.execute();
     }
 
+    public static void declineRequest(final String requester, final String userName, final Activity activity){
+    class DeleteUSer extends AsyncTask<Void,Void,String> {
+        ProgressDialog loading;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = ProgressDialog.show(activity, "Updating...", "Wait...", false, false);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading.dismiss();
+            Toast.makeText(activity, s, Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected String doInBackground(Void... v)
+        {
+            HashMap<String,String> params = new HashMap<>();
+            params.put(Config.TAG_USER_NAME,userName);
+            params.put(Config.TAG_REQUESTER_NAME,requester);
+            RequestHandler rh = new RequestHandler();
+            String s = rh.sendPostRequest(Config.URL_REJECT_WATCHERS,params);
+            return s;
+        }
+    }
+
+    DeleteUSer de = new DeleteUSer();
+    de.execute();
+}
+
     public static void addWatchers(final String user, final String watcher, final Activity activity)
     {
 
@@ -236,6 +269,8 @@ public class TalkToDB
         UpdateUserLocation ae = new UpdateUserLocation();
         ae.execute();
     }
+
+
 
 
 }

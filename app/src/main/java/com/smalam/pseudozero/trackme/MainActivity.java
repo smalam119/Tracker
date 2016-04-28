@@ -11,13 +11,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import apputils.HandyFunctions;
 import config.Config;
-import gcmFiles.MainActivityTest;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
 
     TextView loggedInMessage;
-    Button watchMeButton,watchButton,requestButton,profileButton,logOutButton,setWatchers;
+    Button watchMeButton,watchButton,profileButton,logOutButton,setWatchers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,9 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         watchMeButton.setOnClickListener(this);
 
         watchButton = (Button) findViewById(R.id.watch_button_main_activity);
-        watchButton.setOnClickListener(this);
-
-        requestButton = (Button) findViewById(R.id.requests_button_main_activity);
         watchButton.setOnClickListener(this);
 
         setWatchers = (Button) findViewById(R.id.set_watchers_button_main_activity);
@@ -99,9 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 goToSetWatcher();
 
-                break;
-
-            case R.id.requests_button_main_activity :
                 break;
 
             case R.id.profile_button_main_activity:
@@ -184,4 +177,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent i = new Intent(this,ProfileActivity.class);
         startActivity(i);
     }
+
+    public void goToRequests()
+    {
+
+    }
+
 }

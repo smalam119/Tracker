@@ -36,4 +36,13 @@
     <string name="unregistering_message">Un-registering Notification Service...</string>
     <string name="token_error_message">An error occurred while either fetching the InstanceID token,
         sending the fetched token to the server. Please refresh.</string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="title_activity_request">RequestActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="fragment_watchers">My Watchers</string>
+    <string name="fragment_my_requests">My Request</string>
+    <string name="fragment_requests">Requests</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

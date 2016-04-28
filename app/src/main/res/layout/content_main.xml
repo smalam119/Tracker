@@ -40,12 +40,6 @@
         android:text="@string/set_watchers_text_activity_main"
         />
 
-    <Button
-        android:id="@+id/requests_button_main_activity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/request_text_activity_main"
-        />
 
     <Button
         android:id="@+id/profile_button_main_activity"

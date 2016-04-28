@@ -16,30 +16,31 @@
         android:gravity="center"
         android:textSize="20sp"/>
 
-    <TextView
-        android:id="@+id/your_watchers_text_view_profile"
+    <Button
+        android:id="@+id/my_watchers_btn_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Watchers"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:layout_below="@id/username_text_view_profile"
-        android:layout_marginTop="20dp"/>
+        android:text="My Watchers"
+        android:layout_marginTop="30dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/username_text_view_profile"/>
 
-    <ListView
-        android:id="@+id/watchers_list_view_profile"
+    <Button
+        android:id="@+id/requests_btn_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/your_watchers_text_view_profile">
-    </ListView>
+        android:text="Requests"
+        android:layout_marginTop="30dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/my_watchers_btn_profile"/>
 
     <Button
         android:id="@+id/unreg_btn_profile"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/watchers_list_view_profile"
         android:text="Unregister"
         android:layout_marginTop="30dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/requests_btn_profile"/>
 
 </RelativeLayout>

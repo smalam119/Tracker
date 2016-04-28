@@ -15,7 +15,7 @@ public class NotificationActivity extends Activity implements View.OnClickListen
     TextView tv;
     public static final String DATA = "requester";
     String requester;
-    Button acceptButton;
+    Button acceptButton,cancelButton;
     String userName;
 
     @Override
@@ -27,6 +27,9 @@ public class NotificationActivity extends Activity implements View.OnClickListen
 
         acceptButton = (Button) findViewById(R.id.accept_button_notification);
         acceptButton.setOnClickListener(this);
+
+        cancelButton = (Button) findViewById(R.id.cancel_button_notification);
+        cancelButton.setOnClickListener(this);
 
         requester = String.valueOf(getIntent().getExtras().get(DATA));
 
@@ -49,7 +52,7 @@ public class NotificationActivity extends Activity implements View.OnClickListen
                 break;
 
             case R.id.cancel_button_notification :
-                //
+                TalkToDB.declineRequest(requester,userName,NotificationActivity.this);
                 break;
 
             case R.id.leave_it_pending_button_notification:
