@@ -24,14 +24,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
-import apputils.HandyFunctions;
 import config.Config;
 import databaseHelpers.RequestHandler;
 
 public class WatchersMapsActivity extends FragmentActivity implements OnMapReadyCallback
 {
-
+    public static final String WATCHED_NAME = "watchedName";
     private GoogleMap mMap;
     Marker marker;
     public Handler handler;
@@ -48,9 +46,9 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        watchedName = HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME,Config.WATCHER_SHARED_PREF,WatchersMapsActivity.this);
+        watchedName = String.valueOf(getIntent().getExtras().get(WATCHED_NAME));
 
-        HandyFunctions.getLongToast(watchedName,getApplicationContext());
+        //HandyFunctions.getLongToast(watchedName,getApplicationContext());
 
         handler = new Handler();
         runnable = new MyRunnable();

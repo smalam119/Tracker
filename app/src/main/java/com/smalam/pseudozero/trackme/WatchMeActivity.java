@@ -1,7 +1,6 @@
 package com.smalam.pseudozero.trackme;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -27,13 +26,24 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
     private android.location.LocationListener locationListener;
     private LocationManager locationManager;
     String userName;
-    Button inDangerButton,outOfDangerButton;
+    Button inDangerButton,outOfDangerButton,trackMeButton;
     public boolean isInDanger = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_me);
+
+        userName = HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,getApplicationContext());
+
+        trackMeButton = (Button) findViewById(R.id.track_me);
+        trackMeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                TalkToDB.sendTrackRequest(userName,"a0j126",WatchMeActivity.this);
+            }
+        });
 
         inDangerButton = (Button) findViewById(R.id.in_danger);
         inDangerButton.setOnClickListener(new View.OnClickListener()
@@ -58,7 +68,6 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
             }
         });
 
-        userName = HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,getApplicationContext());
 
         Toast.makeText(getApplicationContext(),userName,Toast.LENGTH_LONG).show();
 

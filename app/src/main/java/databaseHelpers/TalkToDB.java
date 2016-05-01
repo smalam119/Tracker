@@ -271,6 +271,44 @@ public class TalkToDB
     }
 
 
+    public static void sendTrackRequest(final String userName, final String watcherName, final Activity activity)
+    {
+
+
+        class StartTracking extends AsyncTask<Void,Void,String> {
+
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(activity,"Registering...","Wait...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(activity, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... v) {
+                HashMap<String,String> params = new HashMap<>();
+                params.put(Config.KEY_USER_NAME,userName);
+                params.put(Config.KEY_WATCHER,watcherName);
+
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(Config.URL_NOTIFICATION_SERVER_SEND_TRACK_REQUEST, params);
+                return res;
+            }
+        }
+
+        StartTracking ae = new StartTracking();
+        ae.execute();
+    }
+
+
 
 
 }

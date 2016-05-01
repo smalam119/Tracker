@@ -103,10 +103,10 @@
             android:name="gcmFiles.MainActivityTest"
             android:label="@string/title_activity_watch_me" />
         <activity
-            android:name=".NotificationActivity"
+            android:name=".RequestNotificationActivity"
             android:label="@string/title_activity_watch_me" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".MyWatchersActivity"></activity>
+        <activity android:name=".DisplayRequestActivity"></activity>
     </application>
 
 </manifest>

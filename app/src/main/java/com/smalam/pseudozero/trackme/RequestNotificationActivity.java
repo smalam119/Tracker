@@ -10,7 +10,7 @@ import apputils.HandyFunctions;
 import config.Config;
 import databaseHelpers.TalkToDB;
 
-public class NotificationActivity extends Activity implements View.OnClickListener
+public class RequestNotificationActivity extends Activity implements View.OnClickListener
 {
     TextView tv;
     public static final String DATA = "requester";
@@ -47,12 +47,12 @@ public class NotificationActivity extends Activity implements View.OnClickListen
         switch(v.getId())
         {
             case R.id.accept_button_notification :
-                TalkToDB.acceptWatchers(requester,userName,NotificationActivity.this,"1");
+                TalkToDB.acceptWatchers(requester,userName,RequestNotificationActivity.this,"1");
                 Toast.makeText(this,requester + userName,Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.cancel_button_notification :
-                TalkToDB.declineRequest(requester,userName,NotificationActivity.this);
+                TalkToDB.declineRequest(requester,userName,RequestNotificationActivity.this);
                 break;
 
             case R.id.leave_it_pending_button_notification:

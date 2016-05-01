@@ -18,15 +18,17 @@ import java.util.ArrayList;
 import apputils.HandyFunctions;
 import config.Config;
 import databaseHelpers.RequestHandler;
+import databaseHelpers.TalkToDB;
 
-public class MyWatchersActivity extends AppCompatActivity implements ListView.OnItemClickListener
+public class DisplayRequestActivity extends AppCompatActivity implements ListView.OnItemClickListener
 {
     ListView watcherListView;
     private String JSON_STRING;
     String userName;
-    public static final String TYPE = "default";
+    public static final String IS_ACCEPTED = "default";
     public static final String ITEM_OPTION_TYPE = "default2";
-    public String type,itemOptionType;
+    public static final String IS_MINE_REQUEST = "default3";
+    public String type,itemOptionType,isMineRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,8 +36,9 @@ public class MyWatchersActivity extends AppCompatActivity implements ListView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_watchers);
 
-        type = String.valueOf(getIntent().getExtras().get(TYPE));
+        type = String.valueOf(getIntent().getExtras().get(IS_ACCEPTED));
         itemOptionType = String.valueOf(getIntent().getExtras().get(ITEM_OPTION_TYPE));
+        isMineRequest = String.valueOf(getIntent().getExtras().get(IS_MINE_REQUEST));
 
         userName = HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,this);
         watcherListView = (ListView) findViewById(R.id.watchers_list_view_profile);
@@ -46,22 +49,22 @@ public class MyWatchersActivity extends AppCompatActivity implements ListView.On
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-        String watcherName = parent.getItemAtPosition(position).toString();
+        String watcher = parent.getItemAtPosition(position).toString();
 
-        Toast.makeText(this,watcherName,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,watcher,Toast.LENGTH_LONG).show();
 
         if(itemOptionType.equals("yes"))
         {
-            showDialogOnlyDelete(watcherName);
+            showDialogOnlyDelete(watcher);
         }
 
         if(itemOptionType.equals("no"))
         {
-            showDialog(watcherName);
+            showDialog(watcher);
         }
     }
 
-    protected void showDialogOnlyDelete(String watcherName)
+    protected void showDialogOnlyDelete(final String watcherName)
     {
 
         AlertDialog alertbox = new AlertDialog.Builder(this)
@@ -71,7 +74,8 @@ public class MyWatchersActivity extends AppCompatActivity implements ListView.On
                     // do something when the button is clicked
                     public void onClick(DialogInterface arg0, int arg1)
                     {
-
+                        TalkToDB.declineRequest(watcherName,userName,DisplayRequestActivity.this);
+                        getAllWatchers();
                     }
                 })
 
@@ -87,17 +91,17 @@ public class MyWatchersActivity extends AppCompatActivity implements ListView.On
 
     }
 
-    protected void showDialog(String watcherName)
+    protected void showDialog(final String requester)
     {
 
         AlertDialog alertbox = new AlertDialog.Builder(this)
-                .setMessage("Do you want to accept " + watcherName +" as a watcher ?")
+                .setMessage(requester +" wants you to be a watcher ?")
                 .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
 
                     // do something when the button is clicked
                     public void onClick(DialogInterface arg0, int arg1)
                     {
-
+                        TalkToDB.acceptWatchers(requester,userName,DisplayRequestActivity.this,"1");
                     }
                 })
 
@@ -106,7 +110,8 @@ public class MyWatchersActivity extends AppCompatActivity implements ListView.On
                     // do something when the button is clicked
                     public void onClick(DialogInterface arg0, int arg1)
                     {
-
+                        TalkToDB.declineRequest(requester,userName,DisplayRequestActivity.this);
+                        getAllWatchers();
                     }
                 })
                 .show();
@@ -120,7 +125,7 @@ public class MyWatchersActivity extends AppCompatActivity implements ListView.On
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(MyWatchersActivity.this,"Fetching Data","Wait...",false,false);
+                loading = ProgressDialog.show(DisplayRequestActivity.this,"Fetching Data","Wait...",false,false);
             }
 
             @Override
@@ -134,7 +139,16 @@ public class MyWatchersActivity extends AppCompatActivity implements ListView.On
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequest(Config.URL_ALL_WATCHERS,userName);
+                String s = null;
+                if(isMineRequest.equals("1"))
+                {
+                    s = rh.sendGetRequest(Config.URL_MY_REQUESTS,userName);
+                }
+                if(isMineRequest.equals("0"))
+                {
+                    s = rh.sendGetRequest(Config.URL_OTHERS_REQUEST,userName);
+                }
+
                 return s;
             }
         }
@@ -159,7 +173,11 @@ public class MyWatchersActivity extends AppCompatActivity implements ListView.On
                 String isAccepted = jo.getString(Config.TAG_IS_ACCEPTED);
                 String watcherName = jo.getString(Config.TAG_WATCHER_NAME);
 
-                if(isAccepted.equals(type))
+                if(isAccepted.equals(type) && isMineRequest.equals("1"))
+                {
+                    list.add(watcherName);
+                }
+                if(isMineRequest.equals("0"))
                 {
                     list.add(watcherName);
                 }

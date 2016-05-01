@@ -81,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     // do something when the button is clicked
                     public void onClick(DialogInterface arg0, int arg1)
                     {
-                        goToRequests("0","no");
+                        goToRequests("0","no","1");
                     }
                 })
 
@@ -90,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     // do something when the button is clicked
                     public void onClick(DialogInterface arg0, int arg1)
                     {
-
+                        goToRequests("0","yes","0");
                     }
                 })
                 .show();
@@ -104,7 +104,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         {
             case R.id.my_watchers_btn_profile :
 
-                goToRequests("1","yes");
+                goToRequests("1","yes","1");
 
                 break;
 
@@ -125,11 +125,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public void goToRequests(String type,String onlyDelete)
+    public void goToRequests(String isAccepted,String onlyDelete,String isMineRequest)
     {
-        Intent i = new Intent(this,MyWatchersActivity.class);
-        i.putExtra(MyWatchersActivity.TYPE,type);
-        i.putExtra(MyWatchersActivity.ITEM_OPTION_TYPE,onlyDelete);
+        Intent i = new Intent(this,DisplayRequestActivity.class);
+        i.putExtra(DisplayRequestActivity.IS_ACCEPTED,isAccepted);
+        i.putExtra(DisplayRequestActivity.ITEM_OPTION_TYPE,onlyDelete);
+        i.putExtra(DisplayRequestActivity.IS_MINE_REQUEST,isMineRequest);
         startActivity(i);
     }
 

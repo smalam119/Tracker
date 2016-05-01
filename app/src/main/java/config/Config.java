@@ -21,7 +21,8 @@ public class Config
     public static final String URL_WATCHED_LOCATION= "http://jenkisoutside-001-site1.1tempurl.com/test/getWatchedsLocation.php?watcherName=";
     public static final String URL_ADD_WATCHERS= "http://jenkisoutside-001-site1.1tempurl.com/test/addWatchers.php";
     public static final String URL_ACCEPT_WATCHERS= "http://jenkisoutside-001-site1.1tempurl.com/test/acceptWatchers.php";
-    public static final String URL_ALL_WATCHERS= "http://jenkisoutside-001-site1.1tempurl.com/test/getAllWatchers.php?userName=";
+    public static final String URL_MY_REQUESTS = "http://jenkisoutside-001-site1.1tempurl.com/test/getMyRequests.php?userName=";
+    public static final String URL_OTHERS_REQUEST = "http://jenkisoutside-001-site1.1tempurl.com/test/getOthersRequests.php?userName=";
     public static final String URL_DELETE_USER= "http://jenkisoutside-001-site1.1tempurl.com/test/deleteUser.php?userName=";
     public static final String URL_REJECT_WATCHERS= "http://jenkisoutside-001-site1.1tempurl.com/test/rejectRequest.php";
 
@@ -75,6 +76,8 @@ public class Config
     public static final String URL_NOTIFICATION_SERVER = "http://jenkisoutside-001-site1.1tempurl.com/gcmphp/";
 
     public static final String URL_NOTIFICATION_SERVER_SEND_REQUEST = "http://jenkisoutside-001-site1.1tempurl.com/gcmphp/gcm_main3.php";
+
+    public static final String URL_NOTIFICATION_SERVER_SEND_TRACK_REQUEST = "http://jenkisoutside-001-site1.1tempurl.com/gcmphp/gcm_main4.php";
 
     public static String notificationType[] = {"default", "type1"};
 
