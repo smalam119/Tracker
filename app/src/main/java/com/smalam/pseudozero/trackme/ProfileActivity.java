@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void returnToLogin()
     {
         HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME, Config.LOGGED_IN_SHARED_PREF, false, this);
-        Intent i = new Intent(this,LoginActivity.class);
+        Intent i = new Intent(this,RegisterActivity.class);
         startActivity(i);
         finish();
     }

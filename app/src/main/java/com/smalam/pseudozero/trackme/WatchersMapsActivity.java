@@ -22,10 +22,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import config.Config;
 import databaseHelpers.RequestHandler;
+import databaseHelpers.TalkToDB;
 
 public class WatchersMapsActivity extends FragmentActivity implements OnMapReadyCallback
 {
@@ -38,7 +40,8 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
     String watchedName; //= "sydCool0f108";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watchers_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.

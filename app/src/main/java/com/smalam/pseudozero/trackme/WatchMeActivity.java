@@ -1,9 +1,11 @@
 package com.smalam.pseudozero.trackme;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -15,8 +17,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.ArrayList;
 import apputils.HandyFunctions;
 import config.Config;
+import databaseHelpers.RequestHandler;
 import databaseHelpers.TalkToDB;
 
 public class WatchMeActivity extends FragmentActivity implements LocationSource {
@@ -28,9 +35,12 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
     String userName;
     Button inDangerButton,outOfDangerButton,trackMeButton;
     public boolean isInDanger = false;
+    private String JSON_STRING;
+    public ArrayList<String> list = new ArrayList<String>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_me);
 
@@ -41,7 +51,7 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
             @Override
             public void onClick(View v)
             {
-                TalkToDB.sendTrackRequest(userName,"a0j126",WatchMeActivity.this);
+                sendRequestToAllWatchers();
             }
         });
 
@@ -68,8 +78,6 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
             }
         });
 
-
-        Toast.makeText(getApplicationContext(),userName,Toast.LENGTH_LONG).show();
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new MyLocationListener();
@@ -104,7 +112,8 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
 
     @Override
     public void onPause() {
-        if (locationManager != null) {
+        if (locationManager != null)
+        {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
@@ -115,7 +124,8 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
 
         setUpMapIfNeeded();
@@ -131,16 +141,19 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
 
 
     @Override
-    public void activate(OnLocationChangedListener onLocationChangedListener) {
+    public void activate(OnLocationChangedListener onLocationChangedListener)
+    {
         this.onLocationChangedListener = onLocationChangedListener;
     }
 
     @Override
-    public void deactivate() {
+    public void deactivate()
+    {
         this.onLocationChangedListener = null;
     }
 
-    private void setUpMapIfNeeded() {
+    private void setUpMapIfNeeded()
+    {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -156,12 +169,78 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
         }
     }
 
-    private void setUpMap() {
+    private void setUpMap()
+    {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             return;
         }
         mMap.setMyLocationEnabled(true);
+    }
+
+    private void sendRequestToAllWatchers(){
+        class GetJSON extends AsyncTask<Void,Void,String> {
+
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(WatchMeActivity.this,"Fetching Data","Wait...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                JSON_STRING = s;
+                showWatchers();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = null;
+                s = rh.sendGetRequest(Config.URL_MY_REQUESTS, userName);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+
+
+    }
+
+    private void showWatchers()
+    {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(JSON_STRING);
+            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
+
+            for(int i = 0; i<result.length(); i++) {
+                JSONObject jo = null;
+                try {
+                    jo = result.getJSONObject(i);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String isAccepted = jo.getString(Config.TAG_IS_ACCEPTED);
+                String watcherName = jo.getString(Config.TAG_WATCHER_NAME);
+
+                if(isAccepted.equals("1"))
+                {
+                    TalkToDB.sendTrackRequest(userName,watcherName,WatchMeActivity.this);
+                }
+
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 
@@ -212,5 +291,7 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
             // TODO Auto-generated method stub
             Toast.makeText(getApplicationContext(), "status changed", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 }

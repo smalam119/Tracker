@@ -156,7 +156,8 @@ public class DisplayRequestActivity extends AppCompatActivity implements ListVie
         gj.execute();
     }
 
-    private void showWatchers(){
+    private void showWatchers()
+    {
         JSONObject jsonObject = null;
         ArrayList<String> list = new ArrayList<String>();
         try {

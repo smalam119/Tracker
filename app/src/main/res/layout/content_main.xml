@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"/>
 
+
     <Button
         android:id="@+id/watch_me_button_main_activity"
         android:layout_width="match_parent"
@@ -26,12 +27,14 @@
         android:text="@string/watch_me_text_activity_main"
         />
 
+    <!--
     <Button
         android:id="@+id/watch_button_main_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/watch_text_activity_main"
         />
+        -->
 
     <Button
         android:id="@+id/set_watchers_button_main_activity"
@@ -48,11 +51,14 @@
         android:text="@string/profile_text_activity_main"
         />
 
+    <!--
     <Button
         android:id="@+id/log_out_button_main_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/log_out_text_activity_main"
         />
+
+        -->
 
 </LinearLayout>

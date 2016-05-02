@@ -4,6 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import config.Config;
 
@@ -12,6 +18,7 @@ import config.Config;
  */
 public class TalkToDB
 {
+
 
 
     public static void addUser(final String userName, final String password, final String phoneNumber, final Activity activity)
@@ -307,7 +314,6 @@ public class TalkToDB
         StartTracking ae = new StartTracking();
         ae.execute();
     }
-
 
 
 

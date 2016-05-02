@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         watchMeButton = (Button) findViewById(R.id.watch_me_button_main_activity);
         watchMeButton.setOnClickListener(this);
 
-        watchButton = (Button) findViewById(R.id.watch_button_main_activity);
-        watchButton.setOnClickListener(this);
+        //watchButton = (Button) findViewById(R.id.watch_button_main_activity);
+        //watchButton.setOnClickListener(this);
 
         setWatchers = (Button) findViewById(R.id.set_watchers_button_main_activity);
         setWatchers.setOnClickListener(this);
@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         profileButton = (Button) findViewById(R.id.profile_button_main_activity);
         profileButton.setOnClickListener(this);
 
-        logOutButton = (Button) findViewById(R.id.log_out_button_main_activity);
-        logOutButton.setOnClickListener(this);
+        //logOutButton = (Button) findViewById(R.id.log_out_button_main_activity);
+        //logOutButton.setOnClickListener(this);
 
         String s = HandyFunctions.readFromSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGED_IN_SHARED_PREF,this)+"";
 
@@ -85,11 +85,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
 
-            case R.id.watch_button_main_activity :
+            //case R.id.watch_button_main_activity :
 
-                goToWatch();
+                //goToWatch();
 
-                break;
+                //break;
 
             case R.id.set_watchers_button_main_activity:
 
@@ -103,9 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
 
-            case R.id.log_out_button_main_activity :
-               returnToLogin();
-                break;
+            //case R.id.log_out_button_main_activity :
+                //break;
         }
     }
 
