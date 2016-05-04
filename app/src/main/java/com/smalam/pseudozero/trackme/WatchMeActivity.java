@@ -6,12 +6,17 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
@@ -26,51 +31,61 @@ import config.Config;
 import databaseHelpers.RequestHandler;
 import databaseHelpers.TalkToDB;
 
-public class WatchMeActivity extends FragmentActivity implements LocationSource {
+public class WatchMeActivity extends FragmentActivity implements LocationSource, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
     private OnLocationChangedListener onLocationChangedListener;
     private android.location.LocationListener locationListener;
     private LocationManager locationManager;
     String userName;
-    Button inDangerButton,outOfDangerButton,trackMeButton;
+    Button inDangerButton, outOfDangerButton, trackMeButton;
     public boolean isInDanger = false;
+    public boolean isTrackingOn = false;
     private String JSON_STRING;
     public ArrayList<String> list = new ArrayList<String>();
+    Location mLastLocation;
+    GoogleApiClient mGoogleApiClient;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_me);
 
-        userName = HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME,Config.USER_SHARED_PREF,getApplicationContext());
+        buildGoogleApiClient();
+
+        if (mGoogleApiClient != null)
+        {
+            mGoogleApiClient.connect();
+        } else
+        {
+            Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
+        }
+
+
+        userName = HandyFunctions.readFromSharedPreferencesString(Config.SHARED_PREF_NAME, Config.USER_SHARED_PREF, getApplicationContext());
 
         trackMeButton = (Button) findViewById(R.id.track_me);
         trackMeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
+                isTrackingOn = true;
                 sendRequestToAllWatchers();
             }
         });
 
         inDangerButton = (Button) findViewById(R.id.in_danger);
-        inDangerButton.setOnClickListener(new View.OnClickListener()
-        {
+        inDangerButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 isInDanger = true;
             }
         });
 
         outOfDangerButton = (Button) findViewById(R.id.out_of_danger);
-        outOfDangerButton.setOnClickListener(new View.OnClickListener()
-        {
+        outOfDangerButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 isInDanger = false;
 
                 CustomDialogBox customDialogBox = new CustomDialogBox(WatchMeActivity.this);
@@ -85,24 +100,17 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
             boolean gpsIsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             boolean networkIsEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (gpsIsEnabled)
-            {
+            if (gpsIsEnabled) {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 2000L, 5F, locationListener);
-            }
-            else if (networkIsEnabled)
-            {
+            } else if (networkIsEnabled) {
                 locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER, 2000L, 5F, locationListener);
-            }
-            else
-            {
+            } else {
                 //Show an error dialog that GPS is disabled...
             }
-        }
-        else
-        {
+        } else {
             //Show some generic error dialog because something must have gone wrong with location manager.
         }
 
@@ -112,8 +120,7 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
 
     @Override
     public void onPause() {
-        if (locationManager != null)
-        {
+        if (locationManager != null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
@@ -124,15 +131,13 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
 
         setUpMapIfNeeded();
 
         if (locationManager != null) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
             mMap.setMyLocationEnabled(true);
@@ -141,19 +146,16 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
 
 
     @Override
-    public void activate(OnLocationChangedListener onLocationChangedListener)
-    {
+    public void activate(OnLocationChangedListener onLocationChangedListener) {
         this.onLocationChangedListener = onLocationChangedListener;
     }
 
     @Override
-    public void deactivate()
-    {
+    public void deactivate() {
         this.onLocationChangedListener = null;
     }
 
-    private void setUpMapIfNeeded()
-    {
+    private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -169,24 +171,23 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
         }
     }
 
-    private void setUpMap()
-    {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
+    private void setUpMap() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         mMap.setMyLocationEnabled(true);
     }
 
-    private void sendRequestToAllWatchers(){
-        class GetJSON extends AsyncTask<Void,Void,String> {
+    private void sendRequestToAllWatchers() {
+        class GetJSON extends AsyncTask<Void, Void, String> {
 
 
             ProgressDialog loading;
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(WatchMeActivity.this,"Fetching Data","Wait...",false,false);
+                loading = ProgressDialog.show(WatchMeActivity.this, "Fetching Data", "Wait...", false, false);
             }
 
             @Override
@@ -211,14 +212,13 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
 
     }
 
-    private void showWatchers()
-    {
+    private void showWatchers() {
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(JSON_STRING);
             JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
 
-            for(int i = 0; i<result.length(); i++) {
+            for (int i = 0; i < result.length(); i++) {
                 JSONObject jo = null;
                 try {
                     jo = result.getJSONObject(i);
@@ -228,9 +228,8 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
                 String isAccepted = jo.getString(Config.TAG_IS_ACCEPTED);
                 String watcherName = jo.getString(Config.TAG_WATCHER_NAME);
 
-                if(isAccepted.equals("1"))
-                {
-                    TalkToDB.sendTrackRequest(userName,watcherName,WatchMeActivity.this);
+                if (isAccepted.equals("1")) {
+                    TalkToDB.sendTrackRequest(userName, watcherName, WatchMeActivity.this);
                 }
 
 
@@ -241,6 +240,41 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
         }
 
 
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+
+        if (mLastLocation != null)
+        {
+            //Toast.makeText(this,""+mLastLocation.getLatitude()+" "+mLastLocation.getLongitude(),Toast.LENGTH_LONG).show();
+            TalkToDB.updateLocation(userName,mLastLocation.getLatitude()+"",mLastLocation.getLongitude()+"","false","false",WatchMeActivity.this);
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
     }
 
 
@@ -259,14 +293,19 @@ public class WatchMeActivity extends FragmentActivity implements LocationSource 
 
                 Toast.makeText(getApplicationContext(),"Location Changed",Toast.LENGTH_LONG).show();
 
+                if(isTrackingOn)
+                {
+                    TalkToDB.updateLocation(userName, location.getLatitude() + "", location.getLongitude() + "","false","true", WatchMeActivity.this);
+                }
+
                 if(isInDanger)
                 {
-                    TalkToDB.updateLocation(userName, location.getLatitude() + "", location.getLongitude() + "","true", WatchMeActivity.this);
+                    TalkToDB.updateLocation(userName, location.getLatitude() + "", location.getLongitude() + "","true","true", WatchMeActivity.this);
                 }
 
                 if(!isInDanger)
                 {
-                    TalkToDB.updateLocation(userName, location.getLatitude() + "", location.getLongitude() + "","false", WatchMeActivity.this);
+                    TalkToDB.updateLocation(userName, location.getLatitude() + "", location.getLongitude() + "","false","true", WatchMeActivity.this);
                 }
             }
         }

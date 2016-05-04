@@ -40,6 +40,7 @@ public class Config
     public static final String KEY_IS_IN_DANGER = "isInDanger";
     public static final String KEY_WATCHER = "watcherName";
     public static final String KEY_IS_ACCEPT = "isAccept";
+    public static final String KEY_IS_TRACKING_ON = "isTrackingOn";
 
 
 
@@ -58,6 +59,7 @@ public class Config
     public static final String TAG_IS_ACCEPTED = "isAccepted";
     public static final String TAG_WATCHER_NAME = "watcherName";
     public static final String TAG_REQUESTER_NAME = "requester";
+    public static final String TAG_IS_TRACKING_ON = "isTrackingOn";
 
     public static final String SHARED_PREF_NAME = "trackMe";
     public static final String USER_SHARED_PREF = "userName";

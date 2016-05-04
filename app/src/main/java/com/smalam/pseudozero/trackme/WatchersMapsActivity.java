@@ -173,13 +173,19 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
             String lat = c.getString(Config.TAG_CURRENT_LAT_);
             String lng = c.getString(Config.TAG_CURRENT_LNG_);
             String isInDangerFromDb = c.getString(Config.TAG_IS_IN_DANGER);
+            String isTrackingOn = c.getString(Config.TAG_IS_TRACKING_ON);
 
             if(isInDangerFromDb.equalsIgnoreCase("true"))
             {
                 isInDanger = true;
             }
 
-            Toast.makeText(getApplicationContext(),lat+" "+lng+" "+isInDanger+"",Toast.LENGTH_LONG).show();
+            if(isTrackingOn.equalsIgnoreCase("true"))
+            {
+                finish();
+            }
+
+            Toast.makeText(getApplicationContext(),lat+" "+lng+" "+isInDanger+" "+isTrackingOn,Toast.LENGTH_LONG).show();
 
             goToLocation( Double.parseDouble(lat),  Double.parseDouble(lng));
         }
