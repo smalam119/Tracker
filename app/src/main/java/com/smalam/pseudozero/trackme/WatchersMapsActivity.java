@@ -22,12 +22,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import config.Config;
 import databaseHelpers.RequestHandler;
-import databaseHelpers.TalkToDB;
 
 public class WatchersMapsActivity extends FragmentActivity implements OnMapReadyCallback
 {
@@ -53,6 +51,8 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
 
         //HandyFunctions.getLongToast(watchedName,getApplicationContext());
 
+        getWatchedsLocationDefaultZoom(WatchersMapsActivity.this);
+
         handler = new Handler();
         runnable = new MyRunnable();
     }
@@ -71,7 +71,15 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
         watchedsLocationUpdate();
     }
 
-    private void goToLocation(double lat, double lng, float zoom)
+    private void goToLocation(double lat, double lng)
+    {
+        LatLng latLng = new LatLng(lat,lng);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(latLng);
+        mMap.moveCamera(cameraUpdate);
+        setMarker(getLocation(latLng),lat,lng);
+    }
+
+    private void goToLocationZoom(double lat, double lng,float zoom)
     {
         LatLng latLng = new LatLng(lat,lng);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng,zoom);
@@ -173,7 +181,62 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
 
             Toast.makeText(getApplicationContext(),lat+" "+lng+" "+isInDanger+"",Toast.LENGTH_LONG).show();
 
-            goToLocation( Double.parseDouble(lat),  Double.parseDouble(lng),15.0f);
+            goToLocation( Double.parseDouble(lat),  Double.parseDouble(lng));
+        }
+
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void getWatchedsLocationDefaultZoom(final Activity activity)
+    {
+        class GetUser extends AsyncTask<Void,Void,String> {
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(activity,"Fetching...","Wait...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                readLatLngZoom(s,16.0f);
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequest(Config.URL_WATCHED_LOCATION, watchedName);
+                return s;
+            }
+        }
+        GetUser ge = new GetUser();
+        ge.execute();
+    }
+
+    private void readLatLngZoom(String json,float zoom)
+    {
+        try
+        {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
+            JSONObject c = result.getJSONObject(0);
+            String lat = c.getString(Config.TAG_CURRENT_LAT_);
+            String lng = c.getString(Config.TAG_CURRENT_LNG_);
+            String isInDangerFromDb = c.getString(Config.TAG_IS_IN_DANGER);
+
+            if(isInDangerFromDb.equalsIgnoreCase("true"))
+            {
+                isInDanger = true;
+            }
+
+            Toast.makeText(getApplicationContext(),lat+" "+lng+" "+isInDanger+"",Toast.LENGTH_LONG).show();
+
+            goToLocationZoom( Double.parseDouble(lat),  Double.parseDouble(lng),zoom);
         }
 
         catch (JSONException e)

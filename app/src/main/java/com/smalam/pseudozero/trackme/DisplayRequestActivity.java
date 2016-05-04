@@ -55,12 +55,12 @@ public class DisplayRequestActivity extends AppCompatActivity implements ListVie
 
         if(itemOptionType.equals("yes"))
         {
-            showDialogOnlyDelete(watcher);
+            showDialog(watcher);
         }
 
         if(itemOptionType.equals("no"))
         {
-            showDialog(watcher);
+            showDialogOnlyDelete(watcher);
         }
     }
 

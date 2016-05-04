@@ -12,8 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity
     EditText usernameEDRegister,passwordEDRegister,phoneNumberEDRegister;
     String rawUsername,password,phoneNumber,dialogBoxMessage,userName;
     AlertDialog.Builder builder;
+    private boolean loggedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,6 +44,8 @@ public class RegisterActivity extends AppCompatActivity
         phoneNumberEDRegister = (EditText) findViewById(R.id.phone_number_edit_text_register);
 
         builder = new AlertDialog.Builder(this);
+
+        builder.setCancelable(false);
 
         builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
 
@@ -86,6 +87,27 @@ public class RegisterActivity extends AppCompatActivity
     protected void onPause()
     {
         super.onPause();
+        finish();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        loggedIn = HandyFunctions.readFromSharedPreferencesBoolean(Config.SHARED_PREF_NAME,Config.LOGGED_IN_SHARED_PREF,this);
+
+        //If we will get true
+        if(loggedIn){
+            //We will start the Profile Activity
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 

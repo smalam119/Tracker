@@ -125,16 +125,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
 
-                .setNeutralButton("Log Out", new DialogInterface.OnClickListener() {
-
-                    // do something when the button is clicked
-                    public void onClick(DialogInterface arg0, int arg1)
-                    {
-                        returnToLogin();
-                    }
-                })
-
-
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
 
                     // do something when the button is clicked
@@ -177,9 +167,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-    public void goToRequests()
-    {
-
-    }
 
 }

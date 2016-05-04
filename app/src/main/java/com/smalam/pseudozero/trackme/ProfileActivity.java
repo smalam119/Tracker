@@ -63,9 +63,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public void returnToLogin()
+    public void returnToRegistration()
     {
-        HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME, Config.LOGGED_IN_SHARED_PREF, false, this);
         Intent i = new Intent(this,RegisterActivity.class);
         startActivity(i);
         finish();
@@ -118,7 +117,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                 startRegistrationService(false,false);
                 TalkToDB.deleteUser(userName,ProfileActivity.this); //not deleting from both users and watchers if watcher is empty
-                returnToLogin();
+                HandyFunctions.writeToSharedPreferencesBoolean(Config.SHARED_PREF_NAME, Config.LOGGED_IN_SHARED_PREF, false, this);
+                returnToRegistration();
 
                 break;
 

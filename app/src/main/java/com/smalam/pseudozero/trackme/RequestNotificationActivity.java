@@ -49,14 +49,16 @@ public class RequestNotificationActivity extends Activity implements View.OnClic
             case R.id.accept_button_notification :
                 TalkToDB.acceptWatchers(requester,userName,RequestNotificationActivity.this,"1");
                 Toast.makeText(this,requester + userName,Toast.LENGTH_LONG).show();
+                finish();
                 break;
 
             case R.id.cancel_button_notification :
                 TalkToDB.declineRequest(requester,userName,RequestNotificationActivity.this);
+                finish();
                 break;
 
             case R.id.leave_it_pending_button_notification:
-                //
+                finish();
                 break;
         }
     }
