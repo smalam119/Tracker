@@ -7,11 +7,9 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.smalam.pseudozero.trackme.R;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;

@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
 import com.google.android.gms.gcm.GcmListenerService;
 import com.smalam.pseudozero.trackme.R;
 import com.smalam.pseudozero.trackme.RequestNotificationActivity;
@@ -88,7 +87,7 @@ public class MyGcmListenerService extends GcmListenerService
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(getString(R.string.app_short_name))
+                .setContentTitle("TrackMe")
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -119,7 +118,7 @@ public class MyGcmListenerService extends GcmListenerService
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(getString(R.string.app_short_name))
+                .setContentTitle("TrackMe")
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

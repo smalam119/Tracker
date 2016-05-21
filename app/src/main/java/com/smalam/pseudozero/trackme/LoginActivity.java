@@ -58,7 +58,8 @@ public class LoginActivity extends AppCompatActivity
 
         registerButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);
             }
@@ -76,7 +77,8 @@ public class LoginActivity extends AppCompatActivity
         HandyFunctions.getLongToast(loggedIn+"",getApplicationContext());
 
         //If we will get true
-        if(loggedIn){
+        if(loggedIn)
+        {
             //We will start the Profile Activity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
@@ -92,23 +94,27 @@ public class LoginActivity extends AppCompatActivity
 
     public void loginUser(final Activity activity, final String userName, final String givenPassword)
     {
-        class GetUser extends AsyncTask<Void,Void,String> {
+        class GetUser extends AsyncTask<Void,Void,String>
+        {
             ProgressDialog loading;
             @Override
-            protected void onPreExecute() {
+            protected void onPreExecute()
+            {
                 super.onPreExecute();
                 loading = ProgressDialog.show(activity,"Fetching...","Wait...",false,false);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(String s)
+            {
                 super.onPostExecute(s);
                 loading.dismiss();
                 matchPassword(activity, s, givenPassword);
             }
 
             @Override
-            protected String doInBackground(Void... params) {
+            protected String doInBackground(Void... params)
+            {
                 RequestHandler rh = new RequestHandler();
                 String s = rh.sendGetRequest(Config.URL_GET_USER, userName);
                 return s;

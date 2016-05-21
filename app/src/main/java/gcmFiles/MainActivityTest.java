@@ -19,11 +19,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.smalam.pseudozero.trackme.R;
-
 import java.util.HashMap;
-
 import apputils.HandyFunctions;
 import config.Config;
 import databaseHelpers.RequestHandler;

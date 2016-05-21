@@ -259,7 +259,7 @@ public class WatchersMapsActivity extends FragmentActivity implements OnMapReady
         {
             //HandyFunctions.getShortToast("its working",getApplicationContext());
             getWatchedsLocation(WatchersMapsActivity.this);
-            handler.postDelayed(runnable,5000);
+            handler.postDelayed(runnable,10000);
         }
     }
 
