@@ -30,20 +30,23 @@ public class TalkToDB
             ProgressDialog loading;
 
             @Override
-            protected void onPreExecute() {
+            protected void onPreExecute()
+            {
                 super.onPreExecute();
                 loading = ProgressDialog.show(activity,"Registering...","Wait...",false,false);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            protected void onPostExecute(String s)
+            {
                 super.onPostExecute(s);
                 loading.dismiss();
                 Toast.makeText(activity, s, Toast.LENGTH_LONG).show();
             }
 
             @Override
-            protected String doInBackground(Void... v) {
+            protected String doInBackground(Void... v)
+            {
                 HashMap<String,String> params = new HashMap<>();
                 params.put(Config.KEY_USER_NAME,userName);
                 params.put(Config.KEY_PASSWORD,password);
@@ -88,7 +91,7 @@ public class TalkToDB
         de.execute();
     }
 
-    public static void declineRequest(final String requester, final String userName, final Activity activity){
+    public static void declineRequest(final String watcherName, final String userName, final Activity activity){
     class DeleteUSer extends AsyncTask<Void,Void,String> {
         ProgressDialog loading;
 
@@ -110,7 +113,7 @@ public class TalkToDB
         {
             HashMap<String,String> params = new HashMap<>();
             params.put(Config.TAG_USER_NAME,userName);
-            params.put(Config.TAG_REQUESTER_NAME,requester);
+            params.put(Config.TAG_WATCHER_NAME,watcherName);
             RequestHandler rh = new RequestHandler();
             String s = rh.sendPostRequest(Config.URL_REJECT_WATCHERS,params);
             return s;

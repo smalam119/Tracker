@@ -103,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         {
             case R.id.my_watchers_btn_profile :
 
-                goToRequests("1","yes","1");
+                goToRequests("1","no","1");
 
                 break;
 

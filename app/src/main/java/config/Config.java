@@ -24,7 +24,7 @@ public class Config
     public static final String URL_MY_REQUESTS = "http://jenkisoutside-001-site1.1tempurl.com/test/getMyRequests.php?userName=";
     public static final String URL_OTHERS_REQUEST = "http://jenkisoutside-001-site1.1tempurl.com/test/getOthersRequests.php?userName=";
     public static final String URL_DELETE_USER= "http://jenkisoutside-001-site1.1tempurl.com/test/deleteUser.php?userName=";
-    public static final String URL_REJECT_WATCHERS= "http://jenkisoutside-001-site1.1tempurl.com/test/rejectRequest.php";
+    public static final String URL_REJECT_WATCHERS= "http://jenkisoutside-001-site1.1tempurl.com/test/rejectRequest2.php";
 
     //Keys that will be used to send the request to php scripts
 

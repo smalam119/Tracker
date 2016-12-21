@@ -3,6 +3,8 @@ package gcmFiles;
 /**
  * Created by SAYED on 4/23/2016.
  */
+
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -35,7 +37,8 @@ public class MyGcmListenerService extends GcmListenerService
      */
     // [START receive_message]
     @Override
-    public void onMessageReceived(String from, Bundle data) {
+    public void onMessageReceived(String from, Bundle data)
+    {
         String message = "";
         String type = "";
         //Log.d("data: ", data.getString("abc"));
